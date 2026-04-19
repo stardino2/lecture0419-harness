@@ -1,0 +1,27 @@
+# Lecture0419 — AGENTS Guide
+
+This file is the primary entry point for Codex, Cline, Cursor, Claude Code, and any other coding agent.
+
+## Reading Order
+
+1. `docs/architecture.md` — engine ↔ ui boundary rules
+2. `docs/testing.md` — pure function separation, vitest setup
+3. `plans/active/*.md` — active work plan (read before making changes)
+4. `docs/cline-usage.md` — live demo prompt templates
+
+## Work Principles
+
+- **No direct commits to main branch** — always use `git worktree`
+- **Write a plan first** — create `plans/active/<task>.md` before any code change
+- **Engine changes require tests** — any change to `demo/src/engine/` must come with a matching test update in `demo/tests/`
+- **All commits must pass** — `sh scripts/verify-tasks.sh` must succeed before committing
+- **Commit messages** — include a short summary and reference the plan file path
+
+## Context
+
+Demo repo for a 10-minute lecture on Harness Engineering (하네스 엔지니어링).
+Based on OpenAI's 3 pillars: Context engineering / Architectural constraints / Garbage collection.
+
+The demo shows adding a "birthday-seed lucky numbers" feature to a lotto number generator.
+- `Before` state: basic random lotto (1–45, 6 numbers)
+- `After` state: birthday-seeded deterministic lucky numbers

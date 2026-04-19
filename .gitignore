@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+Thumbs.db
+logs/*.png
+logs/*.jpg
+logs/commit-message-draft.md
+*.log
