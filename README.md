@@ -36,3 +36,5 @@ open demo/index.html  # 브라우저에서 UI 확인
 | Context engineering | `AGENTS.md` + `docs/` + `plans/active/` |
 | Architectural constraints | `src/engine` (pure) ↔ `src/ui` 분리, `.husky/pre-commit` |
 | Garbage collection | `plans/active → completed`, `logs/` 정리, size 제한 |
+dummy
+dummy
