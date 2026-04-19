@@ -38,3 +38,4 @@ open demo/index.html  # 브라우저에서 UI 확인
 | Garbage collection | `plans/active → completed`, `logs/` 정리, size 제한 |
 dummy
 dummy
+test
