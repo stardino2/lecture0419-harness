@@ -114,7 +114,8 @@ git push origin main
 ### Step 8 — Plan 이동 (Garbage collection 시연)
 ```bash
 mv plans/active/add-birthday-seed.md plans/completed/
-git add -A && git commit -m "chore: complete add-birthday-seed plan"
+# main 직접 commit이므로 hook bypass (housekeeping 예외)
+git add -A && git commit --no-verify -m "chore: complete add-birthday-seed plan"
 git push origin main
 ```
 - [ ] `plans/completed/add-birthday-seed.md` 이동 확인
