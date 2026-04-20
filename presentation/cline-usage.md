@@ -108,4 +108,4 @@ git checkout after-complete
 # 브라우저 새로고침: demo/index.html?after
 ```
 
-그리고 슬라이드로 복귀해서 `slides/index.html` Step 6 슬라이드를 말로 내레이션한다.
+그리고 슬라이드로 복귀해서 `presentation/slides/index.html` Step 6 슬라이드를 말로 내레이션한다.

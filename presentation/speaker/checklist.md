@@ -27,7 +27,7 @@
 
 ### Step 1–5 — 단일 프롬프트 (Cline 자동)
 
-Cline 입력창에 **이 한 문장만** 붙여넣는다 (`docs/cline-usage.md` Prompt A):
+Cline 입력창에 **이 한 문장만** 붙여넣는다 (`presentation/cline-usage.md` Prompt A):
 
 ```
 생일을 넣으면 로또번호를 추출해주는 기능을 넣어줘.
@@ -56,7 +56,7 @@ Cline은 `AGENTS.md` §Autonomous Feature Workflow에 따라 자동으로 다음
 
 ### Step 6 — Hook 차단 시연 (두 번째 Cline 프롬프트)
 
-`docs/cline-usage.md` Prompt B를 붙여넣는다:
+`presentation/cline-usage.md` Prompt B를 붙여넣는다:
 
 ```
 이제 harness 훅이 실제로 나쁜 커밋을 막는지 3종으로 보여줘.
@@ -99,7 +99,7 @@ git push origin main
 |---|---|
 | Cline 안 됨 | 미리 작성한 `birthday.js` 보여주고 diff 설명 |
 | 시연 3분 초과 | `git checkout after-complete && open demo/index.html?after` |
-| 전체 시연 불가 | `slides/index.html` 슬라이드만 넘기며 내레이션 |
+| 전체 시연 불가 | `presentation/slides/index.html` 슬라이드만 넘기며 내레이션 |
 
 ---
 

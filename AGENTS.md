@@ -7,9 +7,8 @@ This file is the primary entry point for Codex, Cline, Cursor, Claude Code, and 
 1. `docs/architecture.md` — engine ↔ ui boundary rules
 2. `docs/testing.md` — pure function separation, vitest setup
 3. `plans/active/*.md` — active work plan (read before making changes)
-4. `docs/cline-usage.md` — live demo prompt templates
 
-> 발표자용 내레이션·체크리스트는 `speaker/` 폴더 참조 (agent가 읽을 필요 없음).
+> 발표자용 내레이션·체크리스트·Cline 프롬프트는 `presentation/` 폴더 참조 (agent가 읽을 필요 없음).
 
 ## Work Principles
 

@@ -11,13 +11,16 @@
 ## 폴더 구조
 
 ```
-AGENTS.md            ← agent 목차 (여기서 시작)
-speaker/script.md    ← 강의 대본 (슬라이드별 내레이션)
-speaker/checklist.md ← 발표자 시연 체크리스트
-docs/                ← 아키텍처·테스트·UI 검증·Cline 프롬프트
-plans/               ← active (진행중) / completed (완료)
-logs/                ← 테스트 screenshot, commit message draft
-demo/                ← 로또 시연 코드 (index.html + src/ + tests/)
+AGENTS.md                    ← agent 목차 (여기서 시작)
+presentation/
+  slides/index.html          ← 발표 슬라이드 (자기 완결 HTML)
+  speaker/script.md          ← 강의 대본 (슬라이드별 내레이션)
+  speaker/checklist.md       ← 발표자 시연 체크리스트
+  cline-usage.md             ← 라이브 시연용 Cline 프롬프트
+docs/                        ← demo 아키텍처·테스트·UI 검증 (agent 참조용)
+plans/                       ← active (진행중) / completed (완료)
+logs/                        ← 테스트 screenshot, demo trace
+demo/                        ← 로또 시연 코드 (index.html + src/ + tests/)
 ```
 
 ## 빠른 시작
@@ -35,5 +38,3 @@ open demo/index.html  # 브라우저에서 UI 확인
 | Context engineering | `AGENTS.md` + `docs/` + `plans/active/` |
 | Architectural constraints | `src/engine` (pure) ↔ `src/ui` 분리, `.husky/pre-commit` |
 | Garbage collection | `plans/active → completed`, `logs/` 정리, size 제한 |
-dummy
-dummy
