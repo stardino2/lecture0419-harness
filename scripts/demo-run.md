@@ -11,7 +11,7 @@
 - [ ] Cline 확장 활성화 확인
 - [ ] `npx vitest run` 한 번 돌려서 11개 green 확인
 - [ ] `demo/index.html` 브라우저에서 열어두기 (Before 상태)
-- [ ] GitHub origin 연결 확인: `git remote -v` → `https://github.com/stardino2/lecture0419.git`
+- [ ] GitHub origin 연결 확인: `git remote -v` → `https://github.com/stardino2/lecture0419-harness.git`
 - [ ] `plans/active/` 비어 있는지 확인
 - [ ] 터미널 폰트 크기 키우기 (청중이 보기 쉽게)
 

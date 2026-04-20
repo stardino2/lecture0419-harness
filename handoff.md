@@ -292,4 +292,4 @@ lecture0419/
 - **Martin Fowler**: <https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html>
 - **InfoQ 요약**: <https://www.infoq.com/news/2026/02/openai-harness-engineering-codex/>
 - **유튜브** *(내용 참고, 강의 톤 직접 인용 금지)*: <https://www.youtube.com/watch?v=3yyLg1xbQSs>
-- **이 repo**: <https://github.com/stardino2/lecture0419>
+- **이 repo**: <https://github.com/stardino2/lecture0419-harness>
