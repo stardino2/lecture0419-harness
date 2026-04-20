@@ -120,6 +120,11 @@
     <p class="subtitle">Before state — 기본 random 추출</p>
 
     <div class="field">
+      <label for="birthday">생년월일</label>
+      <input type="date" id="birthday" />
+    </div>
+
+    <div class="field">
       <label for="count">게임 수</label>
       <select id="count">
         <option value="1">1 게임</option>
@@ -200,9 +205,21 @@
 
     document.getElementById("draw").addEventListener("click", () => {
       const count = parseInt(document.getElementById("count").value, 10);
+      const birthdayVal = document.getElementById("birthday").value;
+
+      let rng;
+      if (birthdayVal) {
+        const [y, m, d] = birthdayVal.split("-").map(Number);
+        const t = new Date();
+        const birthdayInt = y * 10000 + m * 100 + d;
+        const todayInt = t.getFullYear() * 10000 + (t.getMonth() + 1) * 100 + t.getDate();
+        const seed = (birthdayInt * 100000000 + todayInt) >>> 0;
+        rng = seededRandom(seed);
+      }
+
       const games = [];
       for (let i = 0; i < count; i++) {
-        games.push(generateLotto());
+        games.push(generateLotto(rng));
       }
       renderGames(games, document.getElementById("output"));
     });
