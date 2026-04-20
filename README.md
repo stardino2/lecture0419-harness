@@ -12,7 +12,7 @@
 
 ```
 AGENTS.md            ← agent 목차 (여기서 시작)
-handoff.md           ← 강의 대본 / 운영 가이드
+scripts/lecture-script.md ← 강의 대본 (슬라이드별 내레이션)
 slides/outline.md    ← 슬라이드 구조 초안
 scripts/demo-run.md  ← 발표자 시연 체크리스트
 docs/                ← 아키텍처·테스트·UI 검증·Cline 프롬프트
