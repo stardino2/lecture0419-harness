@@ -53,14 +53,14 @@
 
 ### Slide 1 — Opening (0:00–0:45)
 
-**제목:** "Harness Engineering — 쫄지 마세요"
+**제목:** "Harness Engineering — 어려워 마세요"
 
-> 오늘 저는 Codex 대신 VSCode의 Cline이라는 확장을 씁니다.
-> 사내 환경에서 Codex CLI 접근이 안 되는 분들이 많으실 텐데 — 도구는 달라도 오늘 배울 원리는 완전히 동일합니다.
+> 오늘 저는 클로드나 Codex 대신 VSCode의 Cline이라는 확장을 씁니다.
+> 사내 환경에서 클로드나 Codex CLI 접근이 안 되는 분들이 많으실 텐데 — 도구는 달라도 오늘 배울 원리는 완전히 동일합니다.
 
 > Prompt engineering, Context engineering, 이젠 Harness engineering.
 > 오늘 10분 안에 이게 뭔지, 왜 나왔는지, 어떻게 적용하는지 정리해드립니다.
-> 마지막 4분은 제가 준비한 로또 번호 추출기 repo에 새 기능을 붙이는 과정을 라이브로 보여드립니다.
+> 마지막 4분은 제가 준비한 프로젝트에서 harness engineering을 적용하는 과정을 라이브로 보여드립니다.
 
 오늘 다루지 않는 것 / 다루는 것:
 - ❌ Cline/Codex 설치법, 요금, 기초 prompt
@@ -292,4 +292,4 @@ lecture0419/
 - **Martin Fowler**: <https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html>
 - **InfoQ 요약**: <https://www.infoq.com/news/2026/02/openai-harness-engineering-codex/>
 - **유튜브** *(내용 참고, 강의 톤 직접 인용 금지)*: <https://www.youtube.com/watch?v=3yyLg1xbQSs>
-- **이 repo**: <https://github.com/stardino2/lecture0419>
+- **이 repo**: <https://github.com/stardino2/lecture0419-harness>
