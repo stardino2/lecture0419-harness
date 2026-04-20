@@ -78,16 +78,16 @@ Computational ↔ Inferential
 ## Slide 6 — Live Demo (5:00–9:00)
 
 **요청:**
-> "Cline아, 로또에 생년월일 입력하면 행운 번호 뽑아줘. 같은 생일은 매번 같은 번호가 나와야 해."
+> "[예시 feature 요청 프롬프트]"
 
 **8단계 (scripts/demo-run.md 참고):**
 1. `git worktree add` → Context engineering
-2. `plans/active/add-birthday-seed.md` 생성 → Context engineering
-3. `birthday.js` 구현 → Architectural constraints
+2. `plans/active/<feature>.md` 생성 → Context engineering
+3. `<feature>.js` 구현 → Architectural constraints
 4. `vitest run` → Computational check
 5. Screenshot → logs/ (Garbage collection)
 6. Hook 차단 시연 (빨강 3종 → 초록) → Architectural constraints ★
-7. `git push origin add-birthday-seed` + merge → 완성
+7. `git push origin <feature-branch>` + merge → 완성
 8. `plans/active → completed` 이동 → Garbage collection
 
 **핵심 멘트 (Step 6 후):**

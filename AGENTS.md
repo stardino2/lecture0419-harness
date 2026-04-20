@@ -22,6 +22,5 @@ This file is the primary entry point for Codex, Cline, Cursor, Claude Code, and 
 Demo repo for a 10-minute lecture on Harness Engineering (하네스 엔지니어링).
 Based on OpenAI's 3 pillars: Context engineering / Architectural constraints / Garbage collection.
 
-The demo shows adding a "birthday-seed lucky numbers" feature to a lotto number generator.
+The demo shows adding a new engine feature to a lotto number generator.
 - `Before` state: basic random lotto (1–45, 6 numbers)
-- `After` state: birthday-seeded deterministic lucky numbers

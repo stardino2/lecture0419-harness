@@ -149,8 +149,8 @@ Harness engineering  →  agent가 사는 환경 설계
 **시연 8단계** (세부는 `scripts/demo-run.md`):
 
 1. `git worktree add` → **Pillar ①** Context: 메인 건드리지 않고 작업 공간 분리
-2. Cline → `plans/active/add-birthday-seed.md` 생성 → **Pillar ①** Agent가 계획부터 씀
-3. Cline → `demo/src/engine/birthday.js` 구현 → **Pillar ②** engine(pure) 유지
+2. Cline → `plans/active/<feature>.md` 생성 → **Pillar ①** Agent가 계획부터 씀
+3. Cline → `demo/src/engine/<feature>.js` 구현 → **Pillar ②** engine(pure) 유지
 4. `npx vitest run` → 11 + α tests green → Computational check
 5. 스크린샷 → `logs/` → **Pillar ③** 증거 남기기
 6. Hook 차단 시연 — main 직접 commit, plans 없이 commit, test 깨진 상태 commit → 전부 ❌
@@ -158,7 +158,7 @@ Harness engineering  →  agent가 사는 환경 설계
 
    > "보셨죠? Architectural constraints — 말이 아니라 실패로 막는 장치입니다."
 
-7. `git push origin add-birthday-seed` + merge to main
+7. `git push origin <feature-branch>` + merge to main
 8. `mv plans/active/... plans/completed/` + commit → **Pillar ③** Garbage collection 시각화
 
 ---
@@ -230,20 +230,18 @@ lecture0419/
     ├── src/
     │   ├── engine/
     │   │   ├── lotto.js         ← generateLotto(rng)
-    │   │   ├── random.js        ← seededRandom(seed)
-    │   │   └── birthday.js      ← generateFromBirthday(y,m,d)
+    │   │   └── random.js        ← seededRandom(seed)
     │   └── ui/
     │       ├── renderer.js
     │       └── input.js
     └── tests/
         ├── lotto.test.js
-        ├── random.test.js
-        └── birthday.test.js     ← placeholder, After에서 채움
+        └── random.test.js
 ```
 
 ### Before / After 브랜치 전략
 - `main`: 하네스 뼈대 + Before 상태 (시연 시작 상태)
-- `add-birthday-seed` (worktree): 라이브 시연에서 발표자가 직접 생성
+- `<feature-branch>` (worktree): 라이브 시연에서 발표자가 직접 생성
 - `after-complete` tag: After 완성본에 태그 — 폴백용
 
 ### husky pre-commit 훅 4단
@@ -260,7 +258,7 @@ lecture0419/
 - **Slide 3·5·7**에 3 pillar 아이콘(Context/Constraints/Collection) 항상 노출 → 마무리에서 자동 기억
 - **시간 리스크**: 라이브 시연이 가장 위험. 5분 지나면 `after-complete` tag 체크아웃으로 즉시 점프
 - **마무리 1분 절대 포기 금지** — "agent가 사는 집" 한 줄이 안 가면 강의 목적 무너짐
-- **Cline 차단 시**: 미리 작성된 `birthday.js` diff를 화면에 띄우고 코드 설명으로 대체
+- **Cline 차단 시**: 미리 작성된 feature 구현 diff를 화면에 띄우고 코드 설명으로 대체
 - Q&A는 10분 **밖**으로 분리 안내
 
 ### 리허설 체크리스트
