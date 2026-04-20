@@ -25,81 +25,51 @@
 
 ## 라이브 시연 (슬라이드 6 구간 / 5:00–9:00)
 
-### Step 1 — Worktree 분리
-```bash
-git worktree add ../lecture0419-wt/add-birthday-seed -b add-birthday-seed
-```
-- [ ] 실행 완료
-- [ ] VSCode에서 worktree 폴더로 전환 (또는 터미널 cd)
+### Step 1–5 — 단일 프롬프트 (Cline 자동)
 
-### Step 2 — Plan 파일 생성 (Cline 사용)
-Cline에 붙여넣기 (`docs/cline-usage.md` Prompt 1):
-```
-Read AGENTS.md and docs/architecture.md, then create a plan file at
-plans/active/add-birthday-seed.md ...
-```
-- [ ] `plans/active/add-birthday-seed.md` 생성됨
-- [ ] 청중에게 설명: "Context engineering — Cline이 AGENTS.md를 읽고 먼저 계획을 씁니다"
+Cline 입력창에 **이 한 문장만** 붙여넣는다 (`docs/cline-usage.md` Prompt A):
 
-### Step 3 — 구현 (Cline 사용)
-Cline에 붙여넣기 (`docs/cline-usage.md` Prompt 2):
 ```
-Follow the plan in plans/active/add-birthday-seed.md and implement...
+생일을 넣으면 로또번호를 추출해주는 기능을 넣어줘.
+같은 날짜에 생성하면 같은 번호가 나와야 함.
 ```
-- [ ] `demo/src/engine/birthday.js` 수정/확인
-- [ ] `demo/src/ui/input.js` + `demo/index.html` birthday field 연동 확인
 
-### Step 4 — Test 작성·실행
-Cline에 붙여넣기 (`docs/cline-usage.md` Prompt 3):
-```
-Write unit tests for demo/src/engine/birthday.js in demo/tests/birthday.test.js...
-```
-- [ ] `birthday.test.js` 업데이트됨
-- [ ] `npx vitest run` 실행 → 전부 green
+Cline은 `AGENTS.md` §Autonomous Feature Workflow에 따라 자동으로 다음을 실행한다:
 
-### Step 5 — Screenshot 저장
+- Step 0 — `sh scripts/demo-trace.sh reset` (로그 초기화)
+- Step 1 — `git worktree add ../lecture0419-wt/add-birthday-seed -b add-birthday-seed` + `cd`
+- Step 2 — `plans/active/add-birthday-seed.md` 생성
+- Step 3 — `demo/src/engine/birthday.js` 구현 (pure)
+- Step 4 — `demo/index.html` + `demo/src/ui/input.js` 연동
+- Step 5 — `demo/tests/birthday.test.js` 작성 + `npx vitest run` green
+
+터미널에 `═══ Step N — 제목 ═══` 배너가 각 단계마다 찍히고, `logs/demo-trace.md`에 시간 스탬프로 기록된다.
+
+- [ ] Cline 프롬프트 입력
+- [ ] 터미널에 Step 1–5 배너 순차 출력 확인
+- [ ] 최종 vitest green 확인 (11+ tests)
+- [ ] 각 배너 찍힐 때 10–15초 청중 설명 (Step 1: worktree / Step 2: plan / Step 3: pure engine / Step 5 green: feedback loop)
+
+### Step 5b — Screenshot 저장 (수동)
 - [ ] 터미널 green 화면 스크린샷 → `logs/<date>-after-test.png`
 - [ ] `demo/index.html?after` 브라우저에서 생년월일 입력 → UI 스크린샷 → `logs/<date>-after-ui.png`
 
-### Step 6 — Hook 차단 시연 (빨강 → 초록)
+### Step 6 — Hook 차단 시연 (두 번째 Cline 프롬프트)
 
-**빨강 ①: main 차단**
-```bash
-git checkout main
-git add -A && git commit -m "test: hook demo"
-# → ❌ Direct commits to main branch are not allowed.
+`docs/cline-usage.md` Prompt B를 붙여넣는다:
+
 ```
-- [ ] 차단 메시지 확인
-```bash
-git checkout add-birthday-seed   # 복귀
+이제 harness 훅이 실제로 나쁜 커밋을 막는지 3종으로 보여줘.
+1) main 직접 커밋  2) plan 없는 커밋  3) 깨진 테스트 커밋
+모두 실패한 뒤, 정상 상태로 복구해서 성공 커밋까지 보여줘.
 ```
 
-**빨강 ②: plans 없으면 차단**
-```bash
-# plans/active 임시 비우기
-mv plans/active/add-birthday-seed.md /tmp/
-git add -A && git commit -m "test: no plan"
-# → ❌ No plan file found in plans/active/
-mv /tmp/add-birthday-seed.md plans/active/   # 복구
-```
-- [ ] 차단 메시지 확인
+Cline이 자동으로 빨강 3종을 실행 → 각 차단 메시지 확인 → 복구 → 정상 커밋 green까지 수행한다.
 
-**빨강 ③: test 실패 차단**
-```bash
-# birthday.test.js에 의도적으로 failing assertion 추가
-# expect(1).toBe(2) 한 줄
-git add -A && git commit -m "test: failing"
-# → ❌ verify-tasks 실패
-# 코드 복구
-```
-- [ ] 차단 메시지 확인
-
-**초록: 전부 통과**
-```bash
-git add -A && git commit -m "feat: add birthday seed lucky numbers"
-# → ✅ pre-commit checks passed
-```
-- [ ] commit 성공 확인
+- [ ] 빨강 ① main 직접 — `❌ Direct commits to main branch are not allowed` 확인
+- [ ] 빨강 ② plan 없음 — `❌ No plan file found in plans/active/` 확인
+- [ ] 빨강 ③ 깨진 테스트 — `❌ verify-tasks` 실패 확인
+- [ ] 초록 — `✅ pre-commit checks passed` 확인
 - [ ] 청중에게 설명: "Architectural constraints — 말이 아니라 실패로 막습니다"
 
 ### Step 7 — Push & Merge

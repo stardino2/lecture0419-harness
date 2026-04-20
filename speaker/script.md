@@ -1,7 +1,7 @@
 # 강의 대본 — Harness Engineering 10분 강의
 
 > 슬라이드별 발표자 내레이션. `slides/index.html`과 나란히 사용.
-> 데모 단계 체크리스트는 `scripts/demo-run.md` 참조.
+> 데모 단계 체크리스트는 `speaker/checklist.md` 참조.
 
 ## 발표 운영 메모
 
@@ -104,19 +104,23 @@ Harness engineering  →  agent가 사는 환경 설계
 
 ## Slide 6 — 라이브 시연 (5:00–9:00)
 
-**요청 (청중에게 보여주는 Cline 입력):**
-> "Cline아, 로또에 생년월일 입력하면 행운 번호 뽑아줘.
-> 같은 생일은 매번 같은 번호가 나와야 해."
+**요청 — Prompt A (청중 앞에서 Cline에 붙여넣는 **한 문장**):**
+> ```
+> 생일을 넣으면 로또번호를 추출해주는 기능을 넣어줘.
+> 같은 날짜에 생성하면 같은 번호가 나와야 함.
+> ```
 
-**시연 8단계** (세부는 `scripts/demo-run.md`):
+Cline은 `AGENTS.md` §Autonomous Feature Workflow를 읽고 Step 1–5를 자동 수행.
+터미널에 `sh scripts/demo-trace.sh "<step>"` 배너가 각 단계마다 찍혀 청중이 진행 상황을 볼 수 있다.
 
-1. `git worktree add` → **Pillar ①** Context: 메인 건드리지 않고 작업 공간 분리
-2. Cline → `plans/active/add-birthday-seed.md` 생성 → **Pillar ①** Agent가 계획부터 씀
-3. Cline → `demo/src/engine/birthday.js` 구현 → **Pillar ②** engine(pure) 유지
-4. `npx vitest run` → 11 + α tests green → Computational check
-5. 스크린샷 → `logs/` → **Pillar ③** 증거 남기기
-6. Hook 차단 시연 — main 직접 commit, plans 없이 commit, test 깨진 상태 commit → 전부 ❌
-   그 다음 모두 복구 → `git commit` → ✅
+**시연 8단계** (세부는 `speaker/checklist.md`):
+
+1. `git worktree add` → **Pillar ①** Context: 메인 건드리지 않고 작업 공간 분리 *(Prompt A 자동)*
+2. Cline → `plans/active/add-birthday-seed.md` 생성 → **Pillar ①** Agent가 계획부터 씀 *(자동)*
+3. Cline → `demo/src/engine/birthday.js` 구현 → **Pillar ②** engine(pure) 유지 *(자동)*
+4. `npx vitest run` → 11 + α tests green → Computational check *(자동)*
+5. 스크린샷 → `logs/` → **Pillar ③** 증거 남기기 *(수동 — Win+Shift+S)*
+6. Hook 차단 시연 — **Prompt B** 붙여넣기 → Cline이 빨강 3종(main 직접 / plan 없음 / 깨진 테스트) 실행 → 모두 ❌ → 복구 → `git commit` → ✅
 
    > "보셨죠? Architectural constraints — 말이 아니라 실패로 막는 장치입니다."
 
