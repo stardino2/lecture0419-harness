@@ -5,3 +5,4 @@ logs/*.png
 logs/*.jpg
 logs/commit-message-draft.md
 *.log
+.claude/settings.local.json
