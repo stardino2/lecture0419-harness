@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harness Engineering — 10분 강의</title>
+  <style>
+    :root {
+      --brand: #0d6b64;
+      --accent: #c97a17;
+      --bg: #f5f1e8;
+      --surface: rgba(255,255,255,0.93);
+      --ink: #1a2332;
+      --muted: #4a5568;
+      --radius: 14px;
+      --ctx: #0d6b64;
+      --con: #c97a17;
+      --gc:  #5b4bbf;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 15% 10%, rgba(13,107,100,.12), transparent 30%),
+                  radial-gradient(circle at 85% 12%, rgba(201,122,23,.10), transparent 30%),
+                  linear-gradient(180deg, #f6f4f0 0%, #f8f9f7 100%);
+      height: 100vh;
+      overflow: hidden;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Slide deck ── */
+    #deck {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      position: absolute;
+      inset: 0;
+      padding: 56px 72px 80px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    .slide.active { display: flex; }
+
+    /* ── Card surface ── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px -12px rgba(16,32,51,.16);
+      padding: 44px 52px;
+      max-width: 900px;
+      width: 100%;
+      align-self: center;
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--brand);
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--brand);
+      margin: 20px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-size: 12px;
+    }
+    p { font-size: 15px; line-height: 1.7; color: var(--ink); }
+    blockquote {
+      border-left: 3px solid var(--brand);
+      padding: 10px 18px;
+      background: rgba(13,107,100,.06);
+      border-radius: 0 8px 8px 0;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      margin: 8px 0;
+    }
+    blockquote.accent {
+      border-left-color: var(--accent);
+      background: rgba(201,122,23,.07);
+    }
+    .quote-en {
+      font-style: italic;
+      font-size: 14px;
+      color: var(--muted);
+      border-left: 3px solid var(--muted);
+      background: rgba(74,85,104,.06);
+    }
+
+    /* ── Lists ── */
+    ul, ol { padding-left: 20px; }
+    li { font-size: 15px; line-height: 1.75; }
+    li + li { margin-top: 4px; }
+
+    /* ── Two-column checklist (Slide 1) ── */
+    .check-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 32px;
+      margin-top: 16px;
+    }
+    .check-col h3 { margin-top: 0; }
+    .check-col li { list-style: none; padding-left: 0; font-size: 14px; }
+
+    /* ── Evolution ladder (Slide 3) ── */
+    .ladder {
+      font-family: "Consolas", "D2Coding", monospace;
+      font-size: 15px;
+      background: rgba(13,107,100,.07);
+      border-radius: 10px;
+      padding: 20px 24px;
+      line-height: 2;
+      color: var(--ink);
+    }
+    .ladder span.arrow { color: var(--brand); font-weight: 700; }
+    .ladder span.label { color: var(--muted); font-size: 13px; }
+
+    /* ── Big quote (Slide 7) ── */
+    .big-quote {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand);
+      line-height: 1.4;
+      padding: 16px 0;
+    }
+
+    /* ── Pillar table (Slide 5) ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      margin: 4px 0 16px;
+    }
+    th {
+      background: rgba(13,107,100,.1);
+      color: var(--brand);
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(16,32,51,.08);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    td code {
+      font-family: "Consolas", "D2Coding", monospace;
+      font-size: 12px;
+      background: rgba(13,107,100,.08);
+      color: var(--brand);
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+
+    /* ── Fowler 2-axis grid (Slide 5) ── */
+    .axis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .axis-cell {
+      background: rgba(16,32,51,.04);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .axis-cell strong {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    /* ── Step tags (Slide 6) ── */
+    .step-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      border-radius: 4px;
+      padding: 1px 6px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .tag--ctx  { background: rgba(13,107,100,.12);  color: var(--ctx); }
+    .tag--con  { background: rgba(201,122,23,.14);  color: var(--con); }
+    .tag--gc   { background: rgba(91,75,191,.12);   color: var(--gc); }
+    .tag--comp { background: rgba(16,32,51,.08);    color: var(--muted); }
+
+    /* ── Demo request box (Slide 6) ── */
+    .demo-request {
+      background: rgba(201,122,23,.1);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    /* ── Next steps list (Slide 7) ── */
+    .next-steps { margin: 12px 0; }
+    .next-steps li {
+      font-size: 14px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(16,32,51,.07);
+    }
+    .next-steps li:last-child { border-bottom: none; }
+    .step-num {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: var(--brand);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 20px;
+      margin-right: 8px;
+    }
+
+    /* ── Pillar chips (persistent, Slides 3·5·7) ── */
+    .pillars {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+      transition: opacity .2s;
+    }
+    .pillars[data-visible="false"] { opacity: 0; pointer-events: none; }
+    .pillars[data-visible="true"]  { opacity: 1; }
+    .chip {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      border-radius: 20px;
+      padding: 4px 11px;
+    }
+    .chip--ctx { background: rgba(13,107,100,.15);  color: var(--ctx); }
+    .chip--con { background: rgba(201,122,23,.18);  color: var(--con); }
+    .chip--gc  { background: rgba(91,75,191,.14);   color: var(--gc);  }
+
+    /* ── HUD (bottom bar) ── */
+    .hud {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(245,241,232,.8);
+      border-top: 1px solid rgba(16,32,51,.07);
+      font-size: 12px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .hud-counter { font-weight: 700; color: var(--brand); }
+    .hud-hint { font-size: 11px; }
+
+    /* ── Slide 1 subtitle ── */
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<aside class="pillars" data-visible="false">
+  <span class="chip chip--ctx">① Context</span>
+  <span class="chip chip--con">② Constraints</span>
+  <span class="chip chip--gc">③ Collection</span>
+</aside>
+
+<main id="deck">
+
+  <!-- ── Slide 1: Opening ── -->
+  <section class="slide" data-slide="1">
+    <div class="card">
+      <div class="eyebrow">Harness Engineering — 삼성전자 월례회</div>
+      <h1>쫄지 마세요</h1>
+      <p class="subtitle">10분 안에 Harness Engineering의 무엇·왜·어떻게를 정리합니다</p>
+      <blockquote>
+        Prompt engineering, Context engineering, 이젠 Harness engineering.<br>
+        오늘 10분 안에 싹 다 정리합니다.<br>
+        마지막 4분은 로또 번호 추출기에 새 기능을 붙이는 걸 라이브로 보여드립니다.
+      </blockquote>
+      <div class="check-cols">
+        <div class="check-col">
+          <h3>❌ 오늘 다루지 않는 것</h3>
+          <ul>
+            <li>Cline 설치법 · 요금</li>
+            <li>기초 prompt 작성법</li>
+          </ul>
+        </div>
+        <div class="check-col">
+          <h3>✅ 오늘 다루는 것</h3>
+          <ul>
+            <li>관점 1개</li>
+            <li>3 pillar</li>
+            <li>라이브 시연 1개</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Slide 2: AI 환경 설계 + 역사 맥락 ── -->
+  <section class="slide" data-slide="2">
+    <div class="card">
+      <div class="eyebrow">0:45 — 배경</div>
+      <h2>AI로 결국 하고 싶은 것</h2>
+      <blockquote>
+        AI가 내 대신 결과물을 만들어 주려면 —<br>
+        우리가 AI가 움직이는 <strong>환경</strong>을 잘 설계해야 합니다.
+      </blockquote>
+      <h3>역사 맥락</h3>
+      <blockquote>
+        Harness라는 단어는 제어 시스템, DevOps, 테스트 인프라에서 오래전부터 쓰인 용어입니다.<br>
+        OpenAI가 2026년 초 5개월 실험을 정리하면서 AI agent 맥락에서 다시 주목받고 있습니다.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── Slide 3: 진화 3단 ── (pillar chips on) -->
+  <section class="slide" data-slide="3" data-pillars="all">
+    <div class="card">
+      <div class="eyebrow">1:45 — 진화</div>
+      <h2>3단 진화</h2>
+      <div class="ladder">
+        Prompt engineering &nbsp;&nbsp;<span class="arrow">→</span>&nbsp;&nbsp;말 잘하기 <span class="label">(무엇을 원하는지 설명)</span><br>
+        Context engineering &nbsp;<span class="arrow">→</span>&nbsp;&nbsp;히스토리·맥락 주기 <span class="label">(어떤 상황인지 알려주기)</span><br>
+        Harness engineering <span class="arrow">→</span>&nbsp;&nbsp;agent가 사는 환경 설계
+      </div>
+      <blockquote style="margin-top:20px">
+        Agent가 똑똑해질수록 환경이 없으면 엉뚱한 방향으로 달립니다.<br>
+        Harness는 말(馬) 마구에서 온 단어 — 에너지를 원하는 방향으로 채널링하는 장치입니다.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── Slide 4: OpenAI 5-Month Experiment ── -->
+  <section class="slide" data-slide="4">
+    <div class="card">
+      <div class="eyebrow">2:15 — 실험</div>
+      <h2>OpenAI 5개월 실험</h2>
+      <ul style="margin-bottom:20px">
+        <li>약 100만 줄 규모의 베타 제품</li>
+        <li>사람이 직접 쓴 코드 <strong>0줄</strong></li>
+        <li>소규모 엔지니어 팀, 5개월</li>
+      </ul>
+      <blockquote>
+        비밀: <strong>"Agent를 바꾸지 않았다. Agent가 사는 집(Harness)을 바꿨다."</strong>
+      </blockquote>
+      <blockquote class="quote-en" style="margin-top:14px">
+        "Most difficult challenges center on designing environments, feedback loops,
+        and control systems."<br>
+        <span style="font-size:12px;color:var(--muted)">— OpenAI, Harness Engineering (2026)</span>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ── Slide 5: 3 Pillar × 2 Axis ── (pillar chips on) -->
+  <section class="slide" data-slide="5" data-pillars="all">
+    <div class="card">
+      <div class="eyebrow">3:00 — 구조</div>
+      <h2>3 Pillar × 2 Axis</h2>
+      <table>
+        <thead>
+          <tr><th>Pillar</th><th>한 줄 설명</th><th>이 repo 실체</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color:var(--ctx)">① Context engineering</strong></td>
+            <td>Agent가 무엇을, 어디서, 왜 읽을지 구조화</td>
+            <td><code>AGENTS.md</code> + <code>docs/</code> + <code>plans/active/</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--con)">② Architectural constraints</strong></td>
+            <td>Agent가 벗어나면 안 되는 경계</td>
+            <td><code>engine</code>(pure) ↔ <code>ui</code> 분리, <code>.husky/pre-commit</code></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--gc)">③ Garbage collection</strong></td>
+            <td>누적 노이즈를 주기적으로 정리</td>
+            <td><code>plans/active → completed</code>, <code>logs/</code> 순환</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Martin Fowler 2 Axis — 20초 체크리스트</h3>
+      <div class="axis-grid">
+        <div class="axis-cell"><strong>Feedforward</strong>사전 제약 — lint rule, hook</div>
+        <div class="axis-cell"><strong>Feedback</strong>사후 검증 — test, review</div>
+        <div class="axis-cell"><strong>Computational</strong>결정적 검증 — test, type check</div>
+        <div class="axis-cell"><strong>Inferential</strong>의미적 검증 — LLM review</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Slide 6: Live Demo ── -->
+  <section class="slide" data-slide="6">
+    <div class="card">
+      <div class="eyebrow">5:00 — 라이브 시연</div>
+      <h2>라이브 시연</h2>
+      <div class="demo-request">
+        "Cline아, 로또에 생년월일 입력하면 행운 번호 뽑아줘.<br>
+        같은 생일은 매번 같은 번호가 나와야 해."
+      </div>
+      <ol style="font-size:14px;line-height:2">
+        <li><code>git worktree add</code> → 작업 공간 분리 <span class="step-tag tag--ctx">① Context</span></li>
+        <li><code>plans/active/add-birthday-seed.md</code> 생성 <span class="step-tag tag--ctx">① Context</span></li>
+        <li><code>birthday.js</code> 구현 (engine 순수 함수) <span class="step-tag tag--con">② Constraints</span></li>
+        <li><code>npx vitest run</code> → green <span class="step-tag tag--comp">Computational</span></li>
+        <li>스크린샷 → <code>logs/</code> <span class="step-tag tag--gc">③ Collection</span></li>
+        <li>Hook 차단 시연 — ❌❌❌ → ✅ <span class="step-tag tag--con">② Constraints ★</span></li>
+        <li><code>git push</code> + merge → 완성</li>
+        <li><code>plans/active → completed</code> 이동 <span class="step-tag tag--gc">③ Collection</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Slide 7: Closing ── (pillar chips on) -->
+  <section class="slide" data-slide="7" data-pillars="all">
+    <div class="card">
+      <div class="eyebrow">9:00 — 마무리</div>
+      <p class="big-quote">"Agent를 바꾸지 말고,<br>agent가 사는 집을 바꾸세요."</p>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">
+        ① Context engineering &nbsp;/&nbsp; ② Architectural constraints &nbsp;/&nbsp; ③ Garbage collection
+      </p>
+      <h3>다음 걸음 — 이번 주 딱 하나</h3>
+      <ol class="next-steps">
+        <li><span class="step-num">1</span><code>AGENTS.md</code> 한 장 → 반복 설명 반으로 줄기</li>
+        <li><span class="step-num">2</span><code>.husky/pre-commit</code> 훅 하나 → 말이 아닌 장치로</li>
+        <li><span class="step-num">3</span>사내 가이드: week3 → week5 → week8 → week7</li>
+      </ol>
+      <blockquote style="margin-top:16px;font-size:13.5px">
+        Harness engineering도 하나의 흐름입니다.<br>
+        공식 pillar를 무조건 따라 하기보다,<br>
+        여러분의 repo·팀·정책에 맞추어 각자 조정해서 쓰시는 것이 가장 좋습니다.
+      </blockquote>
+    </div>
+  </section>
+
+</main>
+
+<nav class="hud">
+  <span class="hud-counter" id="counter">1 / 7</span>
+  <span class="hud-hint">← → · 1–7 · Home · End</span>
+</nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const pillars = document.querySelector('.pillars');
+  let idx = 0;
+
+  function show(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle('active', k === idx));
+    document.getElementById('counter').textContent = (idx + 1) + ' / ' + slides.length;
+    pillars.dataset.visible = slides[idx].dataset.pillars ? 'true' : 'false';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(idx + 1); }
+    else if (['ArrowLeft', 'PageUp'].includes(e.key))    { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); show(0); }
+    else if (e.key === 'End')  { e.preventDefault(); show(slides.length - 1); }
+    else if (/^[1-7]$/.test(e.key)) show(parseInt(e.key, 10) - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>

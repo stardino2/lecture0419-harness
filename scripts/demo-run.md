@@ -129,7 +129,17 @@ git push origin main
 |---|---|
 | Cline 안 됨 | 미리 작성한 `birthday.js` 보여주고 diff 설명 |
 | 시연 3분 초과 | `git checkout after-complete && open demo/index.html?after` |
-| 전체 시연 불가 | `slides/outline.md` 스크린샷 섹션 넘기며 내레이션 |
+| 전체 시연 불가 | `slides/index.html` 슬라이드만 넘기며 내레이션 |
+
+---
+
+## 리허설 체크리스트
+
+- [ ] 통째 타이머 리허설 2회 (10분 초과 시 Slide 3 대본 30초 단축)
+- [ ] 시연 성공 케이스 (3분 내 완료)
+- [ ] Cline 폴백 케이스 (미리 작성 코드 설명, 3분 내)
+- [ ] `after-complete` 긴급 점프 (10초 내)
+- [ ] 동료에게 "3 pillar가 뭐예요?" 질문 → 즉답 나오면 성공
 
 ---
 
