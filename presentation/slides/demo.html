@@ -352,7 +352,7 @@
           <div class="pipeline-stage-body">
             <div class="pipeline-stage-title">Worktree 분리</div>
             <div class="pipeline-stage-desc">
-              <code>git worktree add ../lecture0419-wt/add-birthday-seed</code><br>
+              <code>git worktree add ../lecture0419-wt/&lt;feature-branch&gt;</code><br>
               main 건드리지 않고 격리된 작업 공간 생성
             </div>
             <div style="margin-top:8px"><span class="step-tag tag--ctx">① Context</span></div>
@@ -366,7 +366,7 @@
           <div class="pipeline-stage-body">
             <div class="pipeline-stage-title">Plan 작성</div>
             <div class="pipeline-stage-desc">
-              <code>plans/active/add-birthday-seed.md</code> 생성<br>
+              <code>plans/active/&lt;feature&gt;.md</code> 생성<br>
               코드보다 계획 먼저 — Context engineering
             </div>
             <div style="margin-top:8px"><span class="step-tag tag--ctx">① Context</span></div>
@@ -380,7 +380,7 @@
           <div class="pipeline-stage-body">
             <div class="pipeline-stage-title">Engine / UI 구현</div>
             <div class="pipeline-stage-desc">
-              <code>demo/src/engine/birthday.js</code> — 순수 함수만<br>
+              <code>demo/src/engine/&lt;feature&gt;.js</code> — 순수 함수만<br>
               DOM 호출 금지 · <code>demo/src/ui/input.js</code> 업데이트
             </div>
             <div style="margin-top:8px"><span class="step-tag tag--con">② Constraints</span></div>
@@ -482,7 +482,7 @@
         <li>
           <span class="step-num">7</span>
           <div>
-            <code>git push origin add-birthday-seed</code> + merge to main
+            <code>git push origin &lt;feature-branch&gt;</code> + merge to main
           </div>
         </li>
         <li>

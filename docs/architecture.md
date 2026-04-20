@@ -12,7 +12,6 @@ demo/src/ui/       ← DOM manipulation and event binding only
 ### Engine (testable)
 - `lotto.js` — `generateLotto(rng)` picks 6 unique numbers from 1–45
 - `random.js` — `seededRandom(seed)` returns a deterministic PRNG function
-- `birthday.js` — converts a birthdate to a seed and generates lucky numbers
 
 Rules:
 - Functions take inputs, return outputs. No mutation of external state.

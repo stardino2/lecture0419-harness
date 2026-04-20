@@ -30,18 +30,17 @@
 Cline 입력창에 **이 한 문장만** 붙여넣는다 (`presentation/cline-usage.md` Prompt A):
 
 ```
-생일을 넣으면 로또번호를 추출해주는 기능을 넣어줘.
-같은 날짜에 생성하면 같은 번호가 나와야 함.
+[예시 feature 요청 프롬프트]
 ```
 
-Cline은 `AGENTS.md` §Autonomous Feature Workflow에 따라 자동으로 다음을 실행한다:
+Cline은 `AGENTS.md`에 따라 자동으로 다음을 실행한다:
 
 - Step 0 — `sh scripts/demo-trace.sh reset` (로그 초기화)
-- Step 1 — `git worktree add ../lecture0419-wt/add-birthday-seed -b add-birthday-seed` + `cd`
-- Step 2 — `plans/active/add-birthday-seed.md` 생성
-- Step 3 — `demo/src/engine/birthday.js` 구현 (pure)
+- Step 1 — `git worktree add ../lecture0419-wt/<feature-branch> -b <feature-branch>` + `cd`
+- Step 2 — `plans/active/<feature>.md` 생성
+- Step 3 — `demo/src/engine/<feature>.js` 구현 (pure)
 - Step 4 — `demo/index.html` + `demo/src/ui/input.js` 연동
-- Step 5 — `demo/tests/birthday.test.js` 작성 + `npx vitest run` green
+- Step 5 — `demo/tests/<feature>.test.js` 작성 + `npx vitest run` green
 
 터미널에 `═══ Step N — 제목 ═══` 배너가 각 단계마다 찍히고, `logs/demo-trace.md`에 시간 스탬프로 기록된다.
 
@@ -74,21 +73,21 @@ Cline이 자동으로 빨강 3종을 실행 → 각 차단 메시지 확인 → 
 
 ### Step 7 — Push & Merge
 ```bash
-git push origin add-birthday-seed
+git push origin <feature-branch>
 git checkout main
-git merge add-birthday-seed
+git merge <feature-branch>
 git push origin main
 ```
 - [ ] GitHub에서 main 반영 확인 (선택: 화면 공유)
 
 ### Step 8 — Plan 이동 (Garbage collection 시연)
 ```bash
-mv plans/active/add-birthday-seed.md plans/completed/
+mv plans/active/<feature>.md plans/completed/
 # main 직접 commit이므로 hook bypass (housekeeping 예외)
-git add -A && git commit --no-verify -m "chore: complete add-birthday-seed plan"
+git add -A && git commit --no-verify -m "chore: complete <feature> plan"
 git push origin main
 ```
-- [ ] `plans/completed/add-birthday-seed.md` 이동 확인
+- [ ] `plans/completed/<feature>.md` 이동 확인
 - [ ] 청중에게 설명: "Garbage collection — 완료된 context를 정리합니다"
 
 ---
@@ -97,7 +96,7 @@ git push origin main
 
 | 상황 | 대응 |
 |---|---|
-| Cline 안 됨 | 미리 작성한 `birthday.js` 보여주고 diff 설명 |
+| Cline 안 됨 | 미리 작성한 feature 구현 diff 보여주고 코드 설명 |
 | 시연 3분 초과 | `git checkout after-complete && open demo/index.html?after` |
 | 전체 시연 불가 | `presentation/slides/index.html` 슬라이드만 넘기며 내레이션 |
 
