@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eo pipefail
 
 # Resolve node_modules for git worktrees
 if [ ! -d "node_modules" ]; then
@@ -22,7 +22,12 @@ console.log("  syntax OK:", files.filter(f => f.endsWith(".js")).join(", "));
 EOF
 
 echo "🧪 Unit Tests..."
-./node_modules/.bin/vitest run
+mkdir -p logs
+LOG_FILE="logs/vitest-$(date +%Y-%m-%d).log"
+./node_modules/.bin/vitest run 2>&1 | tee "$LOG_FILE"
+
+echo "📸 Screenshots..."
+node scripts/screenshots.mjs || echo "⚠️  스크린샷 실패 (Playwright 미설치?)"
 
 echo "🏗️  Build check..."
 test -f demo/index.html || { echo "❌ demo/index.html not found"; exit 1; }
