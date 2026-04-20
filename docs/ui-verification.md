@@ -22,13 +22,6 @@ Open `demo/index.html` in a browser (no server needed — plain file).
 - [ ] Multiple games display correctly
 - [ ] Repeated clicks replace previous results
 
-## After state (birthday seed)
-
-- [ ] Birthday input field (YYYY-MM-DD) is visible
-- [ ] Entering the same birthday twice produces identical numbers
-- [ ] Entering a different birthday produces different numbers
-- [ ] Ball display is identical to Before state (colors, layout)
-
 ## Saving a screenshot
 
 After confirming the above, save a screenshot to `logs/`:

@@ -29,11 +29,6 @@ UI code (`demo/src/ui/`) is verified manually (see `docs/ui-verification.md`).
 - Each call returns a float in `[0, 1)`
 - Same seed → identical sequence of values
 
-### `generateFromBirthday(yyyy, mm, dd)`
-- Same date → same output array
-- Different date (even by 1 day) → different output array
-- Output satisfies all `generateLotto` invariants above
-
 ## Example test pattern
 
 ```js

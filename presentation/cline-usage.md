@@ -1,6 +1,6 @@
 # Cline Usage — Live Demo Prompts
 
-이 파일은 VSCode + Cline을 사용한 라이브 시연에서 청중 화면에 띄울 **붙여넣기용 프롬프트**를 담는다. Cline은 시작 시 `AGENTS.md`를 읽고 거기 정의된 **Autonomous Feature Workflow**에 따라 아래 프롬프트 한 줄만으로 Step 1–5를 자동 수행한다.
+이 파일은 VSCode + Cline을 사용한 라이브 시연에서 청중 화면에 띄울 **붙여넣기용 프롬프트**를 담는다. Cline은 시작 시 `AGENTS.md`를 읽고 Work Principles에 따라 아래 프롬프트 한 줄만으로 Step 1–5를 자동 수행한다.
 
 ---
 
@@ -9,20 +9,19 @@
 청중에게 Cline 입력창에 붙여넣는 모습을 보여준다.
 
 ```
-생일을 넣으면 로또번호를 추출해주는 기능을 넣어줘.
-같은 날짜에 생성하면 같은 번호가 나와야 함.
+[예시 feature 요청 프롬프트]
 ```
 
-Cline은 `AGENTS.md` §Autonomous Feature Workflow를 읽고 다음을 순서대로 실행한다:
+Cline은 `AGENTS.md`를 읽고 다음을 순서대로 실행한다:
 
 | Step | 화면에 보이는 것 |
 |---|---|
 | 0 | `sh scripts/demo-trace.sh reset` — 로그 파일 초기화 배너 |
-| 1 | `git worktree add ../lecture0419-wt/add-birthday-seed -b add-birthday-seed` + `cd` |
-| 2 | `plans/active/add-birthday-seed.md` 작성 (Cline이 즉석 생성) |
-| 3 | `demo/src/engine/birthday.js` 작성 (pure functions) |
+| 1 | `git worktree add ../lecture0419-wt/<feature-branch> -b <feature-branch>` + `cd` |
+| 2 | `plans/active/<feature>.md` 작성 (Cline이 즉석 생성) |
+| 3 | `demo/src/engine/<feature>.js` 작성 (pure functions) |
 | 4 | `demo/index.html` + `demo/src/ui/input.js` 업데이트 |
-| 5 | `demo/tests/birthday.test.js` 작성 + `npx vitest run` green |
+| 5 | `demo/tests/<feature>.test.js` 작성 + `npx vitest run` green |
 
 각 step 앞에 터미널에 `═══ Step N — 제목 ═══` 배너가 찍힌다. 동시에 `logs/demo-trace.md`에 시간 스탬프 기록이 남는다.
 
@@ -36,7 +35,7 @@ Cline은 `AGENTS.md` §Autonomous Feature Workflow를 읽고 다음을 순서대
 ### 만약 Cline이 멈추거나 잘못된 경로로 가면
 
 - 가장 흔한 실패: Step 1 후 Cline이 워크트리로 `cd` 안 하고 원래 폴더에 파일을 씀 → `.husky/pre-commit` Step 1에서 차단됨 ("main branch direct commit")
-- 복구: *"이어서 Step 2부터 `D:/workspace/lecture0419-wt/add-birthday-seed/` 기준으로 진행해줘"* 추가 프롬프트
+- 복구: *"이어서 Step 2부터 `D:/workspace/lecture0419-wt/<feature-branch>/` 기준으로 진행해줘"* 추가 프롬프트
 
 ---
 
@@ -61,24 +60,24 @@ sh scripts/demo-trace.sh "Red ① — main 직접 commit"
 git checkout main
 git add -A && git commit -m "test: direct to main"
 # → ❌ Direct commits to main branch are not allowed.
-git checkout add-birthday-seed
+git checkout <feature-branch>
 ```
 
 ### 빨강 ② — plan 없는 commit
 
 ```bash
 sh scripts/demo-trace.sh "Red ② — plan 없는 commit"
-mv plans/active/add-birthday-seed.md /tmp/
+mv plans/active/<feature>.md /tmp/
 git add -A && git commit -m "test: no plan"
 # → ❌ No plan file found in plans/active/
-mv /tmp/add-birthday-seed.md plans/active/
+mv /tmp/<feature>.md plans/active/
 ```
 
 ### 빨강 ③ — 깨진 테스트 commit
 
 ```bash
 sh scripts/demo-trace.sh "Red ③ — 깨진 테스트 commit"
-# birthday.test.js에 expect(1).toBe(2) 임시 추가
+# <feature>.test.js에 expect(1).toBe(2) 임시 추가
 git add -A && git commit -m "test: failing assertion"
 # → ❌ verify-tasks 실패
 # 테스트 복구
@@ -88,9 +87,9 @@ git add -A && git commit -m "test: failing assertion"
 
 ```bash
 sh scripts/demo-trace.sh "Green — 정상 커밋"
-git add -A && git commit -m "feat: add birthday seed lucky numbers
+git add -A && git commit -m "feat: add <feature>
 
-Plan: plans/active/add-birthday-seed.md"
+Plan: plans/active/<feature>.md"
 # → ✅ pre-commit checks passed
 ```
 
