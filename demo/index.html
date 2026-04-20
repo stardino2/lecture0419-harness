@@ -130,11 +130,6 @@
       </select>
     </div>
 
-    <div class="field" id="birthday-field" style="display:none;">
-      <label for="birthday">생년월일 (행운 번호용)</label>
-      <input type="date" id="birthday" placeholder="YYYY-MM-DD" />
-    </div>
-
     <button class="btn" id="draw">번호 뽑기</button>
     <p class="hint" id="hint">버튼을 눌러 번호를 뽑으세요</p>
 
@@ -143,26 +138,73 @@
     <span class="tag">Before — plans/active 없이도 실행 가능한 UI</span>
   </div>
 
-  <script type="module">
-    import { bindControls } from "./src/ui/input.js";
+  <script>
+    // 동기화 대상: demo/src/engine/*, demo/src/ui/* — vitest 테스트는 모듈 버전을 검증한다.
 
-    const birthdayField = document.getElementById("birthday-field");
-    const birthdayInput = document.getElementById("birthday");
-
-    // After state: show birthday field if ?after is in URL
-    if (location.search.includes("after")) {
-      birthdayField.style.display = "block";
-      document.querySelector(".subtitle").textContent =
-        "After state — 생년월일 seed 행운 번호";
-      document.querySelector(".tag").textContent =
-        "After — 같은 생년월일 = 같은 번호 (결정성)";
+    function seededRandom(seed) {
+      let t = seed >>> 0;
+      return function () {
+        t = (t + 0x6d2b79f5) >>> 0;
+        let r = t;
+        r = Math.imul(r ^ (r >>> 15), r | 1);
+        r ^= r + Math.imul(r ^ (r >>> 7), r | 61);
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+      };
     }
 
-    bindControls({
-      drawBtn: document.getElementById("draw"),
-      countSel: document.getElementById("count"),
-      birthdayInput: birthdayInput,
-      output: document.getElementById("output"),
+    function generateLotto(rng) {
+      rng = rng || Math.random;
+      const picked = new Set();
+      while (picked.size < 6) {
+        picked.add(Math.floor(rng() * 45) + 1);
+      }
+      return [...picked].sort((a, b) => a - b);
+    }
+
+    const BALL_COLORS = [
+      { max: 10, bg: "#fbc400", text: "#000" },
+      { max: 20, bg: "#69c8f2", text: "#000" },
+      { max: 30, bg: "#ff7272", text: "#fff" },
+      { max: 40, bg: "#aaa", text: "#fff" },
+      { max: 45, bg: "#b0d840", text: "#000" },
+    ];
+
+    function makeBall(n) {
+      const { bg, text } = BALL_COLORS.find((c) => n <= c.max);
+      const span = document.createElement("span");
+      span.className = "ball";
+      span.textContent = n;
+      span.style.cssText = `
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 44px; height: 44px; border-radius: 50%;
+        background: ${bg}; color: ${text};
+        font-weight: 700; font-size: 15px; margin: 4px;
+        box-shadow: 0 2px 6px rgba(0,0,0,.25);
+      `;
+      return span;
+    }
+
+    function renderGames(numbers2d, container) {
+      container.innerHTML = "";
+      numbers2d.forEach((numbers, i) => {
+        const row = document.createElement("div");
+        row.style.cssText = "display:flex; align-items:center; margin: 6px 0;";
+        const label = document.createElement("span");
+        label.textContent = `게임 ${i + 1}`;
+        label.style.cssText = "min-width:52px; font-size:13px; color:#666; margin-right:8px;";
+        row.appendChild(label);
+        numbers.forEach((n) => row.appendChild(makeBall(n)));
+        container.appendChild(row);
+      });
+    }
+
+    document.getElementById("draw").addEventListener("click", () => {
+      const count = parseInt(document.getElementById("count").value, 10);
+      const games = [];
+      for (let i = 0; i < count; i++) {
+        games.push(generateLotto());
+      }
+      renderGames(games, document.getElementById("output"));
     });
   </script>
 </body>
