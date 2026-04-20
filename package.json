@@ -8,6 +8,7 @@
     "lint": "eslint demo/src/ demo/tests/",
     "verify": "bash scripts/verify-tasks.sh",
     "prepare": "husky",
+    "posttest": "node scripts/screenshots.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "screenshots:install": "playwright install chromium"
   },
