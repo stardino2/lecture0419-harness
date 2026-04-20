@@ -3,6 +3,7 @@ node_modules/
 Thumbs.db
 logs/*.png
 logs/*.jpg
+logs/screenshots/**/*.png
 logs/commit-message-draft.md
 *.log
 .claude/settings.local.json
