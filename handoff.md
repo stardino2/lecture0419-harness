@@ -44,7 +44,7 @@
 | Task | 상태 | 내용 |
 |---|---|---|
 | **Task A** — 시연 레포 구축 | ✅ 완료 (2026-04-19) | `lecture0419/` 전체 구조, vitest 11개 green, hook 설치 완료 |
-| **Task B** — 슬라이드 HTML | ⏳ 다음 세션 | `slides/outline.md` 작성 완료. `slides/index.html` 변환은 시연 스크린샷 확보 후 |
+| **Task B** — 슬라이드 HTML | ✅ 완료 (2026-04-20) | `slides/index.html` 생성 완료. 텍스트 전용, keyboard nav (← → · 1–7), 오프라인 안전 |
 | **Task C** — 리허설 | ⏳ 강의 주간 | `scripts/demo-run.md` 기반 타이머 2회, 폴백 3종 리허설 |
 
 ---
@@ -274,7 +274,7 @@ lecture0419/
 1. VSCode + Cline (메인)
 2. 태블릿 → GitHub Codespaces (Wi-Fi 되면)
 3. `git checkout after-complete` + 코드 내레이션
-4. `slides/outline.md` 스크린샷 섹션만 보여주기 (최후)
+4. `slides/index.html` 슬라이드만 넘기며 내레이션 (텍스트 전용, 최후)
 
 ---
 

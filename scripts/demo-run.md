@@ -129,7 +129,7 @@ git push origin main
 |---|---|
 | Cline 안 됨 | 미리 작성한 `birthday.js` 보여주고 diff 설명 |
 | 시연 3분 초과 | `git checkout after-complete && open demo/index.html?after` |
-| 전체 시연 불가 | `slides/outline.md` 스크린샷 섹션 넘기며 내레이션 |
+| 전체 시연 불가 | `slides/index.html` 슬라이드만 넘기며 내레이션 |
 
 ---
 

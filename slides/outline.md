@@ -1,7 +1,6 @@
 # Slides Outline — Harness Engineering 10분 강의
 
-> Task B용 골격. 다음 세션에서 `slides/index.html`로 변환.
-> 각 슬라이드에 데모 스크린샷 삽입 예정.
+> Task B 완료 (2026-04-20). `slides/index.html`로 변환됨 (텍스트 전용, keyboard nav).
 
 ---
 
